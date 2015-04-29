@@ -69,7 +69,6 @@ class UnrealTools(bpy.types.Panel):
         row.operator("wm.batch_export", text="Batch Export", icon='EXPORT')
 		
         row=col.row(align=True)
-        row.operator("object.toggle_console", text="Console",icon='CONSOLE')
 		
 class wm_unreal_Units(bpy.types.Operator):
     bl_idname="wm.unreal_units"
@@ -96,6 +95,29 @@ class wm_blender_Units(bpy.types.Operator):
         bpy.context.space_data.grid_lines = 16
         return {'FINISHED'}	
 
+class wm_Vertex_Select(bpy.types.Operator):  
+    bl_idname = "wm.sel_vertex"
+    bl_label = "Minimal Operator"
+    def execute(self, context):     
+        bpy.ops.object.mode_set(mode='EDIT') 
+        bpy.ops.mesh.select_mode(type='VERT') 
+        return {'FINISHED'}         
+class wm_Edge_Select(bpy.types.Operator):
+    bl_idname = "wm.sel_edge"
+    bl_label = "Minimal Operator"
+    def execute(self, context):     
+        bpy.ops.object.mode_set(mode='EDIT') 
+        bpy.ops.mesh.select_mode(type='EDGE') 
+        return {'FINISHED'}   
+    
+class wm_Face_Select(bpy.types.Operator):      
+    bl_idname = "wm.sel_face"
+    bl_label = "Minimal Operator"
+    def execute(self, context):     
+        bpy.ops.object.mode_set(mode='EDIT') 
+        bpy.ops.mesh.select_mode(type='FACE') 
+        return {'FINISHED'}   
+
 class wm_smooth(bpy.types.Operator):
     bl_idname="wm.smooth"
     bl_label="Minimal Operator"
@@ -105,6 +127,27 @@ class wm_smooth(bpy.types.Operator):
         bpy.ops.mesh.faces_shade_smooth()
         bpy.ops.object.mode_set(mode='OBJECT')
         return{'FINISHED'}
+    
+class wm_Invert(bpy.types.Operator):  
+    bl_idname = "wm.swap"
+    bl_label = "Minimal Operator"
+    def execute(self, context):     
+        if bpy.context.mode.startswith("EDIT"):
+            bpy.ops.mesh.select_all(action='INVERT')
+        else:
+            bpy.ops.object.select_all(action='INVERT')
+        return {'FINISHED'}
+    
+class wm_Select_All(bpy.types.Operator):  
+    bl_idname = "wm.everything"
+    bl_label = "Minimal Operator"
+    def execute(self, context):     
+        if bpy.context.mode.startswith("EDIT"):
+            bpy.ops.mesh.select_all(action='TOGGLE')
+        else:
+            bpy.ops.object.select_all(action='TOGGLE')
+        return {'FINISHED'}   
+        
 		
 class wm_origin_vertex(bpy.types.Operator):
     bl_idname="wm.origin_vertex"
